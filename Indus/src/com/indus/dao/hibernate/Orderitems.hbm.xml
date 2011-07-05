@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21-Jun-2011 15:13:39 by Hibernate Tools 3.4.0.Beta1 -->
+<hibernate-mapping>
+    <class name="com.indus.dao.hibernate.Orderitems" table="orderitems" catalog="induscom_indus">
+        <composite-id name="id" class="com.indus.dao.hibernate.OrderitemsId">
+            <key-property name="quantity" type="java.lang.Integer">
+                <column name="quantity" />
+            </key-property>
+            <key-property name="color" type="string">
+                <column name="color" length="30" />
+            </key-property>
+            <key-property name="size" type="string">
+                <column name="size" length="20" />
+            </key-property>
+            <key-property name="itemId" type="java.lang.Integer">
+                <column name="itemID" />
+            </key-property>
+            <key-property name="orderid" type="java.lang.Integer">
+                <column name="orderid" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="orders" class="com.indus.dao.hibernate.Orders" update="false" insert="false" fetch="select">
+            <column name="orderid" />
+        </many-to-one>
+        <many-to-one name="catalog" class="com.indus.dao.hibernate.Catalog" update="false" insert="false" fetch="select">
+            <column name="itemID" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

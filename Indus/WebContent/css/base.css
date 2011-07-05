@@ -1,0 +1,247 @@
+/* *************** Selector- Element ******** */
+body {
+	margin: 0;
+	padding: 0;
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	background: #FFFFFF;
+	/*
+	min-width: 1004px;  */
+}
+
+a {text-decoration: none;}
+	a:hover, a:active {text-decoration: underline;}
+
+img, a img {border: none;}
+
+.boldheaders {
+	font: 16px Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	}
+input {
+	font: 13px Verdana, Arial, Helvetica, sans-serif;
+	color: navy;
+}
+.selectCatalog {
+	font: 14px Verdana, Arial, Helvetica, sans-serif;
+	color: #111;
+	width: 120;
+	align: CENTER; 
+	border-style:solid; 
+	border-width:3px;
+	border-color:#112233;	
+	background-color: #F0E68C;	
+}
+select {
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	color: #111;
+	align: CENTER; 
+	border-style:solid; 
+	border-color:#112233;	
+	background-color: #AFF767;	
+}
+textarea {
+	font: 14px Verdana, Arial, Helvetica, sans-serif;
+	color: #111;
+	background-color: #FFFAFA;
+}
+
+table {
+	background-color: #FFFAFA;
+	border-spacing: 1;
+	cellpadding:3;
+	cellspacing:1;
+	border:8;
+	color : #000000;
+	font: 13px Verdana, Arial, Helvetica, sans-serif;
+	}
+table tr th {
+	vertical-align: top;
+	text-align: center;
+	font: 14px Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	}
+table tr td {
+	vertical-align: top;
+	text-align: center;
+	font: 14px Verdana, Arial, Helvetica, sans-serif;
+	}
+td.alignright {
+	vertical-align: top;
+	text-align: right;
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	}
+td.alignleft {
+	vertical-align: top;
+	text-align: left;
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	}	
+.tableLastRow {
+	border-collapse: collapse;
+	background-color:#D8BFD8;
+	font: 14px Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+tr.spaceUnderMedium > td
+{
+  padding-bottom: 6em;
+}
+
+tr.spaceUnderSmallNoWrap > td
+{
+  padding-bottom: 2em;
+  white-space: nowrap;
+}
+tr.spaceUnderSmall > td
+{
+  padding-bottom: 2em;
+}
+tr.spaceTopSmall > td
+{
+  padding-top: 1em;
+}
+tr.nowrap > td
+{
+  white-space: nowrap;
+}
+/* *************** Selector- id (specific/unique element on a page) ******** */
+#formAction
+{
+text-align:center;
+color:red;
+align="left";
+}
+
+
+
+/* *************** Selector- class (The class selector is used to specify a style for a group of elements) ******** */
+
+.center {text-align:center;} 
+
+.calendarContentTable  {
+	width: 120;
+	align: CENTER; 
+	border:0;
+	cellpadding: 1;
+	cellspacing:0;
+	background-color: #00FF33;
+	}
+	
+.headerTable {
+	border:"0"; width:100%; cellpadding:0; cellspacing:0;
+	background-color:#fffbfd;
+}
+
+.headerTableRowData {
+	text-align: center;
+	/* background-color:#6699CC; */
+	background-color:#000080;
+	font: 17px Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	width: 33%;
+}
+
+.eventheaderTableRowData{
+	text-align: center;
+	background-color:#99CCCC;
+	font: 15px Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	width: 25%;
+}
+
+.headerTableRowDataLink {
+	color: #F0FFF0;
+	font: 18px Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+.separatorThin {
+border-style:dotted solid dashed; 
+border-width:1px;
+border-color:#FFbf21;
+}
+.separatorMedium {
+border-style:dotted solid dashed; 
+border-width:3px;
+border-color:#98bf21;
+}
+.separatorThick {
+border-style:inset solid; 
+border-width:5px;
+border-color:#FF0000;
+}
+
+.locationLink {
+	background-color:#fffbfd;
+	font: 15px Verdana, Arial, Helvetica, sans-serif;
+	background-color:#FF9999;
+}
+
+.locationTableRow {
+	border-collapse: collapse;
+	background-color:#00FF99;
+	border-spacing: 0;
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+.locationData {
+	/* background-color: #229900; */
+	font: 13px Verdana, Helvetica, sans-serif;
+	}
+.mandatoryFields {
+	font: 13px Verdana,bold, Helvetica, sans-serif;
+	color: black;
+	}	
+.tablerowButton{
+	font: 13px Verdana, bold, Helvetica, sans-serif;
+	background-color:CornflowerBlue;
+}
+.tableDataEdit{
+    background-color: #FFFFFF;
+    border-spacing: 1px;
+    font: 11px Verdana,Arial,Helvetica,sans-serif;
+    border-style:solid; 
+	border-width:0px;
+	border-color:#005655;
+	cellpadding:3;
+	cellspacing:3;
+}
+.tableSplBorder {
+	border-width: 8px;
+	cellpadding: 5px;
+	cellspacing: 2px;
+	border: 8px
+}
+
+.button{
+     padding-top: 0;
+         margin-right: 3px;
+    vertical-align: bottom;
+   color: #FFFFFF;
+   font-size: 0.9em;
+   font-family: Arial,Helvetica,sans-serif;
+}
+
+input.btn, select.btn {
+	/*
+    color: #005500;
+    font: 14px Verdana,bold, Helvetica, sans-serif;
+    background-color: #FFEEDD;
+    border: 1px solid #FFFFFF; 
+    background: url(../images/bg-month-name1.jpg); 
+    */
+	color: #000000;
+	font: 14px Verdana, Helvetica, sans-serif;
+	font-style: normal;
+	font-weight: bold;
+     background: url(../../images/blank-yellow.GIF); 
+}
+
+div.boundarybox {
+    background-color: #EAF3FE;
+    border: 1px solid #A5CDEC;
+}
+
+

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+  <!-- ============================================ Data Source Configuration  ================================================ Form Bean Definitions -->
+  <form-beans>
+  <form-bean name="AdminUserLoginForm" type="com.lbr.web.struts.form.UserLoginForm"/>
+    <form-bean name="MainForm" type="com.indus.web.struts.form.MainForm"/>
+    <form-bean name="ItemDetailsForm" type="com.indus.web.struts.form.ItemDetailsForm"/>
+    <form-bean name="UserLoginForm" type="com.indus.web.struts.form.UserLoginForm"/>
+    <form-bean name="AddressForm" type="com.indus.web.struts.form.AddressForm"/>
+     <form-bean name="RegisterForm" type="com.indus.web.struts.form.RegisterForm"/>
+     <form-bean name="ForgetPasswordForm" type="com.indus.web.struts.form.ForgetPasswordForm"/>
+  </form-beans>
+  <!-- ========================================= Global Exception Definitions -->
+  <global-exceptions>
+  </global-exceptions>
+  <!--
+  sample exception handler
+            <exception
+                key="expired.password"
+                type="app.ExpiredPasswordException"
+                path="/changePassword.jsp"/>
+            end sample  =========================================== Global Forward Definitions
+  -->
+  <global-forwards>
+	    <!--  Go to UserHomeJSP after executing the action -->
+	    <forward name="mainJSP" path="/MainJSP.do"/>
+	    
+	    <!--  Go to Events page after executing the action -->
+	  <forward name="main" path="/Main.do"/>	   
+      <forward name="register" path="/pages/user/registration.jsp"/>
+      <forward name="signin" path="/pages/user/usersignin.jsp"/>	
+      <forward name="reviewandconfirmorder" path="/pages/user/reviewandconfirmorder.jsp"/>    
+	    
+	    <!-- welcome is simply the login JSP page -->  
+	    <forward name="userLoginJsp" path="/pages/user/userlogin.jsp"/>
+  </global-forwards>
+  
+  <!--  =========================================== Action Mapping Definitions -->
+  <action-mappings>
+    <!-- Default "Welcome" action  Forwards to Welcome.jsp -->
+    <action path="/MainJSP" forward="/pages/user/main.jsp">
+    </action>
+    <action path="/Logout" type="com.lbr.web.struts.action.Logout">
+      <forward name="success" path="/"/>
+    </action>
+
+    <!-- Default "Welcome" action  Forwards to Welcome.jsp -->
+    <action path="/UserLoginJsp" forward="/pages/user/userlogin.jsp">
+    </action>
+    <action path="/UserHomeJSP" forward="/pages/Welcome.jsp">
+    </action>
+    <action path="/Logout" type="com.lbr.web.struts.action.Logout">
+      <forward name="success" path="/pages/user/userlogin.jsp"/>
+    </action>
+    <action path="/AdminUserLogin" name="AdminUserLoginForm" type="com.lbr.web.struts.action.UserLoginAction" scope="request" validate="true" input="/pages/user/userlogin.jsp">
+      <forward name="failure" path="/pages/user/userlogin.jsp"/>
+    </action>
+        
+    <action path="/Main" name="MainForm" type="com.indus.web.struts.action.MainAction" scope="session" validate="true" input="/pages/user/itemdetails.jsp?validationerror=yes">
+      <forward name="showItemDetails" path="/pages/user/itemdetails.jsp"/>
+      <forward name="success" path="/pages/main.jsp"/>
+      <forward name="preparecheckout" path="/pages/user/preparecheckout.jsp"/>
+      <forward name="thankyou" path="/pages/user/thankyou.jsp"/>
+    </action>    
+    <action path="/ItemDetails" name="ItemDetailsForm" type="com.indus.web.struts.action.ItemDetailsAction" scope="session" validate="true" input="/pages/user/itemdetails.jsp">
+      <forward name="location" path="/UserLocation"/>
+      <forward name="failure" path="/pages/main.jsp"/>
+    </action>   
+    <action path="/UserLogin" name="UserLoginForm" type="com.indus.web.struts.action.UserLoginAction" scope="session" validate="true" input="/pages/user/usersignin.jsp">
+      <forward name="shippingaddress" path="/pages/user/shippingaddress.jsp"/>
+      <forward name="shippingaddressAction" path="/Address.do"/>   
+      <forward name="registerAction" path="/Register.do"/>     
+      <forward name="billingaddress" path="/pages/user/billingaddress.jsp"/>
+      <forward name="reviewandconfirmorder" path="/pages/user/reviewandconfirmorder.jsp"/>
+      <forward name="orderstatus" path="/pages/orderstatus.jsp"/>
+      <forward name="existingusershippingaddress" path="/pages/user/existingusershippingaddress.jsp"/>
+      <forward name="failure" path="/pages/user/usersignin.jsp"/>
+    </action>       
+    <action path="/Address" name="AddressForm" type="com.indus.web.struts.action.AddressAction" scope="session" validate="true" input="/pages/user/shippingaddress.jsp">
+      <forward name="shippingaddress" path="/pages/user/shippingaddress.jsp"/>
+      <forward name="selectshippingoption" path="/pages/user/selectshippingoption.jsp"/>
+      <forward name="billingaddress" path="/pages/user/billingaddress.jsp"/>
+      <forward name="orderstatus" path="/pages/orderstatus.jsp"/>
+    </action> 
+     <action path="/Register" name="RegisterForm" type="com.indus.web.struts.action.RegisterAction" scope="session" validate="true" input="/pages/user/registration.jsp">
+      <forward name="forgetpassword" path="/pages/user/forgetpassword.jsp"/>
+      <forward name="shippingaddressAction" path="/Address.do"/>   
+    </action>   
+    <action path="/ForgetPassword" name="ForgetPasswordForm" type="com.indus.web.struts.action.ForgetPasswordAction" scope="session" validate="true" input="/pages/user/forgetpassword.jsp">
+    </action> 
+  </action-mappings>
+  <!-- ============================================= Controller Configuration -->
+  <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+  <!-- ======================================== Message Resources Definitions -->
+  <message-resources parameter="MessageResources"/>
+  <!--
+  =============================================== Plug Ins Configuration  ======================================================= Tiles plugin 
+         This plugin initialize Tiles definition factory. This later can takes some
+    	 parameters explained here after. The plugin first read parameters from
+    	 web.xml, thenoverload them with parameters defined here. All parameters
+    	 are optional.
+         The plugin should be declared in each struts-config file.
+           - definitions-config: (optional)
+                Specify configuration file names. There can be several comma
+    		    separated file names (default: ?? )
+           - moduleAware: (optional - struts1.1)
+                Specify if the Tiles definition factory is module aware. If true
+                (default), there will be one factory for each Struts module.
+    			If false, there will be one common factory for all module. In this
+                later case, it is still needed to declare one plugin per module.
+                The factory will be initialized with parameters found in the first
+                initialized plugin (generally the one associated with the default
+                module).
+    			  true : One factory per module. (default)
+    			  false : one single shared factory for all modules
+    	   - definitions-parser-validate: (optional)
+    	        Specify if xml parser should validate the Tiles configuration file.
+    			  true : validate. DTD should be specified in file header (default)
+    			  false : no validation
+    
+    	  Paths found in Tiles definitions are relative to the main context.
+  -->
+  <plug-in className="org.apache.struts.tiles.TilesPlugin">
+    <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml"/>
+    <set-property property="moduleAware" value="true"/>
+  </plug-in>
+  
+<!--  Validator plugin -->
+<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+          <set-property
+            property="pathnames"
+           value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+</plug-in>  
+</struts-config>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="induscom_indus" match-name="cat"/>
+  <table-filter match-catalog="induscom_indus" match-name="catalog"/>
+  <table-filter match-catalog="induscom_indus" match-name="country"/>
+  <table-filter match-catalog="induscom_indus" match-name="address"/>
+  <table-filter match-catalog="induscom_indus" match-name="customer"/>
+  <table-filter match-catalog="induscom_indus" match-name="shipping"/>
+  <table-filter match-catalog="induscom_indus" match-name="payment"/>
+  <table-filter match-catalog="induscom_indus" match-name="orders"/>  
+  <table-filter match-catalog="induscom_indus" match-name="orderitems"/> 
+</hibernate-reverse-engineering>

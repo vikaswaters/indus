@@ -1,0 +1,125 @@
+package com.lbr.web.struts;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionServlet;
+
+import com.indus.IndusConstants;
+import com.indus.dao.hibernate.Customer;
+import com.indus.web.struts.action.IndusAction;
+public class ApplicationActionServlet extends ActionServlet
+{
+	private static final Logger logger = Logger.getLogger(ApplicationActionServlet.class);
+    /**
+     * Ask the specified Action instance to handle this request.  Return
+     * the <code>ActionForward</code> instance (if any) returned by
+     * the called <code>Action</code>.
+     *
+     * @param action The Action to process this request
+     * @param mapping The ActionMapping we are processing
+     * @param formInstance The ActionForm we are processing
+     * @param request The servlet request we are processing
+     * @param response The servlet response we are creating
+     *
+     * @exception IOException if an input/output error occurs
+     * @exception ServletException if a servlet exception occurs
+     */
+
+
+
+    protected ActionForward processActionPerform(Action action,
+                                        ActionMapping mapping,
+                                        ActionForm formInstance,
+                                        HttpServletRequest request,
+                                        HttpServletResponse response)
+	throws IOException, ServletException
+	{
+    	super.process(request, response);
+
+    	logger.debug("############# ApplicationActionServlet called.....");
+    	try{
+				//return action.execute(mapping, formInstance, request, response);
+    			return mapping.findForward("userLogin");
+			}
+    	catch (Exception e) {
+
+		}
+		finally{
+		}
+		return null;
+	}
+
+	@Override
+	protected void process(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+		// TODO Auto-generated method stub
+		//if(request.getSession().isNew())
+		//super.process(request, response);
+		
+		if(IndusConstants.INDUS_LOGIN){
+			Customer currUserID = (Customer)request.getSession().getAttribute("ADMIN_USERVO");
+			if(currUserID!=null){
+				IndusAction.setThreadLocalUserValue(currUserID);
+				super.process(request, response);  ///UserLoginJsp.do
+			}
+			else {
+				String uri = request.getRequestURI();
+				if(uri.indexOf("UserLogin")!= -1 || uri.indexOf("UserRegister")!= -1)
+					super.process(request, response);
+				else{ // force it to /SprHibStrt/UserLoginJsp.do
+					RequestDispatcher rd = getServletContext().getRequestDispatcher("/UserLoginJsp.do");
+					rd.forward(request, response);				
+					logger.warn("======= Not authorized =====");
+					//super.process(request, response);
+				}
+	
+			}
+		}
+		else{
+/*			String uri = request.getRequestURI();
+			if(uri.indexOf("Main")!= -1 ){
+				RequestDispatcher rd = getServletContext().getRequestDispatcher("/Main.do");
+				rd.forward(request, response);
+			}
+			else*/
+				super.process(request, response);
+		}
+	}
+
+    /**
+     * Retrieve and return the <code>ActionForm</code> bean associated with
+     * this mapping, creating and stashing one if necessary.  If there is no
+     * form bean associated with this mapping, return <code>null</code>.
+     *
+     * @param mapping The ActionMapping we are processing
+     * @param request The servlet request we are processing
+     */
+/*    protected ActionForm processActionForm(ActionMapping mapping,
+    					   HttpServletRequest request)
+	{
+
+		ActionForm actionForm = super.process(mapping, request);
+
+//		logger.debug("======== Action Form name  ========= "+actionForm.getClass().getName());
+//		logger.debug("======== Action Form is AppForm ?? ========= "+(actionForm instanceof ApplicationForm));
+		if(actionForm instanceof ApplicationForm)
+		{
+
+
+		}
+
+		return actionForm;
+	}*/
+
+
+}

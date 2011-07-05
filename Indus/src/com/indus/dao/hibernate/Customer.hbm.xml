@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21-Jun-2011 15:13:39 by Hibernate Tools 3.4.0.Beta1 -->
+<hibernate-mapping>
+    <class name="com.indus.dao.hibernate.Customer" table="customer" catalog="induscom_indus">
+        <id name="email" type="string">
+            <column name="email" length="30" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="addressByShipaddressid" class="com.indus.dao.hibernate.Address" lazy="false" fetch="select">
+            <column name="shipaddressid" />
+        </many-to-one>
+        <many-to-one name="addressByAddressid" class="com.indus.dao.hibernate.Address" lazy="false" fetch="select">
+            <column name="addressid" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="30" />
+        </property>
+        <property name="username" type="string">
+            <column name="username" length="20" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="16" />
+        </property>
+        <property name="phone" type="java.lang.Long">
+            <column name="phone" />
+        </property>
+        <property name="mobile" type="java.lang.Long">
+            <column name="mobile" />
+        </property>
+        <set name="orderses" table="orders" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="email" length="30" />
+            </key>
+            <one-to-many class="com.indus.dao.hibernate.Orders" />
+        </set>
+    </class>
+</hibernate-mapping>
