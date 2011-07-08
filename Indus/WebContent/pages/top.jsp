@@ -27,16 +27,29 @@
                 <td class="headerTableRowData">
                        <html:link styleClass="headerTableRowDataLink" page="/pages/user/userRegister.jsp">Register</html:link>
 				</td>
-				--%>
 				<td class="headerTableRowData"  colspan="1">
-					<html:link styleClass="headerTableRowDataLink" page="/Logout.do">About us</html:link>
+					<html:link styleClass="headerTableRowDataLink" page="/Logout.do"><img height="30" width="130" src="../images/home_btn.jpg" TITLE="Logout"></html:link>
+				</td>				
+
+			    <td class="headerTableRowData" colspan="1">
+                     <html:link styleClass="headerTableRowDataLink" page="/Main.do"><img height="30" width="130" src="/images/home_btn.jpg" TITLE="Home"></html:link>
+				</td>				
+				<td class="headerTableRowData"  colspan="1">
+					<html:link styleClass="headerTableRowDataLink" page="/pages/user/aboutus.jsp"><img height="30" width="130" src="/images/aboutus_btn.jpg" TITLE="About us"></html:link>
 				</td>				
 			    <td class="headerTableRowData" colspan="1">
-                     <html:link styleClass="headerTableRowDataLink" page="/pages/user/contact.jsp">Contact Us</html:link>
+                     <html:link styleClass="headerTableRowDataLink" page="/pages/user/contactus.jsp"><img height="30" width="130" src="/images/contact_btn.jpg" TITLE="Contact Us"></html:link>
 				</td>
+				--%>
+			    <td class="headerTableRowData" colspan="1">
+                     <html:link styleClass="headerTableRowDataLink" page="/Main.do">Home</html:link>
+				</td>				
 				<td class="headerTableRowData"  colspan="1">
-					<html:link styleClass="headerTableRowDataLink" page="/Logout.do">Logout</html:link>
-				</td>
+					<html:link styleClass="headerTableRowDataLink" page="/pages/user/aboutus.jsp">About</html:link>
+				</td>				
+			    <td class="headerTableRowData" colspan="1">
+                     <html:link styleClass="headerTableRowDataLink" page="/pages/user/contactus.jsp">Contact</html:link>
+				</td>				
         </tr>
          <%} else {%>
           <tr>

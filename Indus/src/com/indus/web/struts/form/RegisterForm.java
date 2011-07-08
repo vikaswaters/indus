@@ -12,7 +12,7 @@ import com.indus.IndusUtility;
 import com.lbr.web.struts.form.UserPreferenceForm;
 
 public class RegisterForm extends org.apache.struts.validator.ValidatorForm{
-	private static final Logger logger = Logger.getLogger(UserPreferenceForm.class);
+	private static final Logger logger = Logger.getLogger(RegisterForm.class);
 
 	private String formAction = "";
 	private String previousformAction = "";

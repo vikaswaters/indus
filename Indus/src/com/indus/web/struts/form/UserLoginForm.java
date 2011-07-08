@@ -28,7 +28,7 @@ import com.lbr.dao.specificdao.DaoUtilities;
 import com.lbr.web.struts.form.UserPreferenceForm;
 
 public class UserLoginForm extends ActionForm{
-	private static final Logger logger = Logger.getLogger(UserPreferenceForm.class);
+	private static final Logger logger = Logger.getLogger(UserLoginForm.class);
 
 	private List<Catalog> catalogList;
 	private String formAction = "";

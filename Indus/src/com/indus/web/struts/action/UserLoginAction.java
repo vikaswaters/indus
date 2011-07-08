@@ -26,7 +26,7 @@ import com.lbr.dao.specificdao.DaoUtilities;
 import com.lbr.web.struts.action.UserPreferenceAction;
 
 public class UserLoginAction extends IndusAction {
-	private static final Logger logger = Logger.getLogger(UserPreferenceAction.class);
+	private static final Logger logger = Logger.getLogger(UserLoginAction.class);
 
 	 public ActionForward execute(
 			    ActionMapping mapping,
@@ -36,7 +36,7 @@ public class UserLoginAction extends IndusAction {
 
 		 		ActionMessages errors = new ActionMessages();
 		 		UserLoginForm objForm = (UserLoginForm) form;
-		 		System.out.println("======== Action: "+objForm.getFormAction()); 
+		 		//System.out.println("======== Action: "+objForm.getFormAction()); 
 		 		ShoppingCart shoppingCart = null;
 		 		if(request.getSession().getAttribute("SHOPPING_CART")!=null)
 		 			shoppingCart = (ShoppingCart)request.getSession().getAttribute("SHOPPING_CART");
@@ -78,15 +78,17 @@ public class UserLoginAction extends IndusAction {
 								   prefForm = new AddressForm();
 								   session.setAttribute("AddressForm", prefForm);
 							   }
-							   prefForm.setName(user.getAddressByShipaddressid().getName());
-							   prefForm.setAddressline1(user.getAddressByShipaddressid().getLine1());
-							   prefForm.setAddressline2(user.getAddressByShipaddressid().getLine2());
-							   prefForm.setCity(user.getAddressByShipaddressid().getCity());
-							   prefForm.setState(user.getAddressByShipaddressid().getState());
-							   prefForm.setZip(user.getAddressByShipaddressid().getZip().toString());
+							   if(user.getAddressByShipaddressid()!=null){
+								   prefForm.setName(user.getAddressByShipaddressid().getName());
+								   prefForm.setAddressline1(user.getAddressByShipaddressid().getLine1());
+								   prefForm.setAddressline2(user.getAddressByShipaddressid().getLine2());
+								   prefForm.setCity(user.getAddressByShipaddressid().getCity());
+								   prefForm.setState(user.getAddressByShipaddressid().getState());
+								   prefForm.setZip(user.getAddressByShipaddressid().getZip().toString());
+								   prefForm.setCountryID(user.getAddressByShipaddressid().getCountry().getCountryid().toString());
+							   }
 							   if(user.getPhone()!=null)
-								   prefForm.setPhone(user.getPhone().toString());								
-							   prefForm.setCountryID(user.getAddressByShipaddressid().getCountry().getCountryid().toString());
+								   prefForm.setPhone(user.getPhone().toString());	
 								logger.info("********* User logged in :"+user.getName());
 				         } else {
 				      	     errors.add("login",new ActionMessage("error.login.invalid"));

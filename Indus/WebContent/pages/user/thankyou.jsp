@@ -35,12 +35,16 @@
 <input type="hidden" name="formAction" value="" />
 <input type="hidden" name="selectedItemID" value="" />
 
-<div id="shoppingcartDiv" style="position: relative; top:50px; left: 0px; width: 300px;" class="boundarybox">
-<p style="font: 14px;">
-Your order has been confirmed.<br/>
-Your order # is <%=shoppingcart.getOrder().getOrderid() %> <br/>
-Your odder details has been mailed to <%=shoppingcart.getCustomer().getEmail() %> <br/>
-Thank you !!
+<div id="shoppingcartDiv" style="position: relative; top:100px; left: 200px; width: 800px;" class="boundarybox">
+<p style="font: 16px Verdana, Helvetica, sans-serif;">
+Thank you for shopping with Indusaura!!<br/>
+Your order  with the details below is confirmed, subject to payment received.</b><br/>
+Your order details has been mailed to <b><%=shoppingcart.getCustomer().getEmail() %></b><br/>
+Your transaction has been completed, and a receipt for your purchase has been emailed to you by Paypal. You may log into your account at www.paypal.com to view details of this transaction.<br/><br/><br/>
+<b>Order and transaction Details:</b><br/>
+Order ID: <b><%=shoppingcart.getOrder().getOrderid() %> </b><br/>
+Payment ID: <b><%=shoppingcart.getOrder().getPayment().getPaymentid() %> </b><br/>
+Transaction ID:<b><%=shoppingcart.getOrder().getPayment().getTransactionid() %> </b><br/>
 </p>
 </div>	
 </html:form>

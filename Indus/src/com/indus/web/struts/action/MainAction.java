@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 
 import com.indus.Emailer;
+import com.indus.IndusConstants;
 import com.indus.IndusUtility;
 import com.indus.SelectionBean;
 import com.indus.core.SelectedItem;
@@ -29,7 +31,7 @@ import com.lbr.dao.specificdao.DaoUtilities;
 import com.lbr.web.struts.action.UserPreferenceAction;
 
 public class MainAction extends IndusAction {
-	private static final Logger logger = Logger.getLogger(UserPreferenceAction.class);
+	private static final Logger logger = Logger.getLogger(MainAction.class);
 
 	 public ActionForward execute(
 			    ActionMapping mapping,
@@ -49,7 +51,7 @@ public class MainAction extends IndusAction {
 		 		
         		//Emailer emailer = new Emailer();
         		//emailer.sendEmail("Order confirmation", "Order details", "vikazsinha@gmail.com");
-		 		System.out.println("==============MainAction called ===========");
+		 		//System.out.println("==============MainAction called ===========");
 		 		ShoppingCart shoppingCart = null;
 		 		if(request.getSession().getAttribute("SHOPPING_CART")!=null)
 		 			shoppingCart = (ShoppingCart)request.getSession().getAttribute("SHOPPING_CART");
@@ -174,43 +176,31 @@ public class MainAction extends IndusAction {
 		        else if(objForm.getFormAction()!=null && objForm.getFormAction().equalsIgnoreCase("CONFIRM_ORDER")){
 		        	objForm.setFormAction(null);
 		        	request.setAttribute("ORDER_CONFIRMED", "");
+		        	saveOrderSendMail(objForm, shoppingCart);
 		        	return mapping.findForward("reviewandconfirmorder");
 		        }		        
-		        else if(objForm.getFormAction()!=null && objForm.getFormAction().equalsIgnoreCase("CONFIRM_ORDER_AFTER_PAYMENT_SUCCEEDED")){
-		        	Shipping ship= shoppingCart.getShipping();
-		        	float shippingcost = ship.getCost()+ship.getDuty()+ship.getTaxes();
-		        	float totalOrderCost = shippingcost + shoppingCart.getTotalItemCost();
-		        	shoppingCart.getOrder().setAmount(totalOrderCost);
-		        	shoppingCart.getOrder().setOrderdate(new Date());
+		        else if(objForm.getFormAction()!=null && objForm.getFormAction().equalsIgnoreCase("PAYMENT_DONE")){
+		        	String transactionID = request.getParameter("tx");
+		        	String paymentStatus = request.getParameter("st");
+		        	String paymentAmount = request.getParameter("amt");
+		        	String cc = request.getParameter("cc");
 		        	Payment payment = new Payment();
-		        	payment.setAmount(totalOrderCost);
-		        	payment.setPaymentdetails("XYZ");
+		        	payment.setPaymentdate(new Date());
+		        	payment.setAmount(new Float(paymentAmount));
+		        	String urlParams = IndusUtility.getAllRequestParams(request);
+		        	if(urlParams.length()>50)
+		        		urlParams = urlParams.substring(0, 50);
+		        	payment.setComments(urlParams);
+		        	logger.info("Post Payment url"+request.getRequestURI().toString());
+		        	payment.setTransactionid(transactionID);
 		        	payment.setStatus(0);
 		        	payment.setType(0);
 		        	boolean statusPayment = DaoUtilities.createOrUpdatePayment(payment);
-		        	
+		        	logger.info("Updating Order with Payment details : "+ statusPayment+ "TxID: "+transactionID);
+		        	// UPDATE ORDER with the payment details
 		        	shoppingCart.getOrder().setPayment(payment);
-		        	shoppingCart.getOrder().setStatus(0);
-		        	boolean statusOrder = DaoUtilities.createNewOrder(shoppingCart.getOrder());
-		        	
-		        	//now add the individual items inthe order 
-		        	List<SelectedItem> selectedItems = shoppingCart.getSelectedItems();
-		        	for (Iterator iterator = selectedItems.iterator(); iterator.hasNext();) {
-						SelectedItem selectedItem = (SelectedItem) iterator.next();
-						Orderitems anItem = new Orderitems();
-						OrderitemsId itemid = new OrderitemsId();
-						itemid.setItemId(selectedItem.getItem().getItemId());
-						itemid.setColor(selectedItem.getColor());
-						itemid.setSize(selectedItem.getSize());
-						itemid.setOrderid(shoppingCart.getOrder().getOrderid());
-						itemid.setQuantity(selectedItem.getQuantity());
-						anItem.setId(itemid);
-						boolean statusOrderitem = DaoUtilities.createNewOrderItem(anItem);
-					}
-		        	// TODO ..
-		        	//send mail to user. ..also check if all the items are in STOCK before finializing order.
-	        		Emailer email = new Emailer();
-	        		email.sendEmail("Order confirmation", "Order details for your shopping at Indusaura....(TODO)", shoppingCart.getCustomer().getEmail());
+		        	boolean statusOrderUpdate = DaoUtilities.updateOrder(shoppingCart.getOrder());
+		        	logger.info("OrderUpdate with Payment details : "+statusOrderUpdate);
 		        	objForm.setFormAction(null);
 		        	return mapping.findForward("thankyou");
 		        	
@@ -243,6 +233,48 @@ public class MainAction extends IndusAction {
 			objForm.setCountryList(IndusUtility.populateCountryDropdownList());
 		else
 			return;
+	 }
+	 
+	 private void saveOrderSendMail(MainForm objForm, ShoppingCart shoppingCart){
+     	Shipping ship= shoppingCart.getShipping();
+     	logger.info("SaveOrder and SendMail : "+ shoppingCart.getCustomer().getEmail());
+    	float shippingcost = ship.getCost()+ship.getDuty()+ship.getTaxes();
+    	float totalOrderCost = shippingcost + shoppingCart.getTotalItemCost();
+    	shoppingCart.getOrder().setAmount(totalOrderCost);
+    	shoppingCart.getOrder().setOrderdate(new Date());
+    	shoppingCart.getOrder().setStatus(0);
+    	shoppingCart.getOrder().setCustomer(shoppingCart.getCustomer());
+    	shoppingCart.getOrder().setShipping(ship);
+    	String invoiceID = IndusConstants.dateFormatter.format(new Date())+"_"+ship.getCountry().getCountryid()+"_"+IndusUtility.generateRandomString(6);
+    	shoppingCart.getOrder().setInvoiceid(invoiceID);
+    	boolean statusOrder = DaoUtilities.createNewOrder(shoppingCart.getOrder());
+    	logger.info("Create New Order:"+statusOrder+", ID: "+shoppingCart.getOrder().getOrderid());
+    	
+    	//now add the individual items inthe order 
+    	List<SelectedItem> selectedItems = shoppingCart.getSelectedItems();
+    	for (Iterator iterator = selectedItems.iterator(); iterator.hasNext();) {
+			SelectedItem selectedItem = (SelectedItem) iterator.next();
+			Orderitems anItem = new Orderitems();
+			OrderitemsId itemid = new OrderitemsId();
+			itemid.setItemId(selectedItem.getItem().getItemId());
+			itemid.setColor(selectedItem.getColor());
+			itemid.setSize(selectedItem.getSize());
+			itemid.setOrderid(shoppingCart.getOrder().getOrderid());
+			itemid.setQuantity(selectedItem.getQuantity());
+			anItem.setId(itemid);
+			boolean statusOrderitem = DaoUtilities.createNewOrderItem(anItem);
+			logger.info("Adding itemID: "+itemid.getItemId()+" to orderID: "+shoppingCart.getOrder().getOrderid()+" : "+statusOrderitem);
+		}
+    	// TODO ..
+    	//send mail to user. ..also check if all the items are in STOCK before finializing order.
+		Emailer email = new Emailer();
+		try {
+			email.sendEmail("Order confirmation", IndusUtility.printOrderHTMLFromJSP(shoppingCart), shoppingCart.getCustomer().getEmail());
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 	 }
 
  

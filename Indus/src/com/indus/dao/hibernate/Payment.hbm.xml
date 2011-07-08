@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 21-Jun-2011 15:13:39 by Hibernate Tools 3.4.0.Beta1 -->
+<!-- Generated 09-Jul-2011 00:48:35 by Hibernate Tools 3.4.0.Beta1 -->
 <hibernate-mapping>
     <class name="com.indus.dao.hibernate.Payment" table="payment" catalog="induscom_indus">
         <id name="paymentid" type="java.lang.Integer">
             <column name="paymentid" />
             <generator class="identity" />
         </id>
+        <property name="transactionid" type="string">
+            <column name="transactionid" length="50" />
+        </property>
         <property name="type" type="java.lang.Integer">
             <column name="type" />
         </property>
@@ -16,9 +19,6 @@
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
-        </property>
-        <property name="paymentdetails" type="string">
-            <column name="paymentdetails" length="50" />
         </property>
         <property name="paymentdate" type="timestamp">
             <column name="paymentdate" length="19" />

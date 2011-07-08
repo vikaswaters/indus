@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -14,21 +15,31 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 
+import com.indus.core.SelectedItem;
+import com.indus.core.ShoppingCart;
 import com.indus.dao.hibernate.Address;
 import com.indus.dao.hibernate.Catalog;
 import com.indus.dao.hibernate.Country;
+import com.indus.dao.hibernate.Orders;
 import com.lbr.dao.specificdao.DaoUtilities;
 
 public class IndusUtility {
 	private static final Logger logger = Logger.getLogger(IndusUtility.class);
-	  public static List<String> createAvailableSizeListForCatelog(Catalog catalog){
+	  public static List<String> createAvailableSizeListForCatelogXXX(Catalog catalog){
 		  String availSizes = catalog.getSize();
 		  availSizes = "S,M,L,XL,XXL";
 		  List<String> eventLevelList = IndusUtility.convertUserPrefStringToList(availSizes);
 		  return eventLevelList;
-		}
+	  }
+	  public static List<String> createAvailableSizeListForCatelog(Catalog catalog){
+		  String sizes = catalog.getSize();
+		  List<String> availSizes = IndusUtility.parseStringWithDelimiter(sizes, "|");
+		  return availSizes;
+	  }	  
 	
 		 public static void TestReferences(List<Integer> arr){
 			 arr.add(new Integer(3));
@@ -47,10 +58,12 @@ public class IndusUtility {
 		 
 		 public static List<String> parseStringWithDelimiter(String address, String delimiter){
 			 List<String> addressComponents = new ArrayList<String>();
-			 StringTokenizer strtkn = new StringTokenizer(address, delimiter);
-			 while(strtkn.hasMoreElements()){
-				 String str = strtkn.nextToken();
-				 addressComponents.add(str);
+			 if(address.indexOf(delimiter)!=-1){
+				 StringTokenizer strtkn = new StringTokenizer(address, delimiter);
+				 while(strtkn.hasMoreElements()){
+					 String str = strtkn.nextToken();
+					 addressComponents.add(str);
+				 }
 			 }
 			 return addressComponents;
 		 }
@@ -144,5 +157,76 @@ public class IndusUtility {
 				return false;
 			}
 			return true;
-		 }	 
+	 }
+
+		 public static String printOrderHTMLFromJSP(ShoppingCart shoppingcartX) {
+				StringBuffer sb = new StringBuffer();
+				Orders loc = shoppingcartX.getOrder();
+				 sb.append("Order ID: "+loc.getOrderid());
+				 sb.append("<br/>");
+				 sb.append("Order Date: "+loc.getOrderdate());
+				 sb.append("<br/><br/><br/>");	
+				 
+				sb.append("<table cellpadding='5' cellspacing='2' border='8'>");
+				sb.append("<tr>");
+				sb.append("<th>Name</th>");
+				sb.append("<th>Unit Price</th>");
+				sb.append("<th>Quantity</th>");
+				sb.append("<th>Price</th>");
+				sb.append("</tr>");				
+				for (Iterator<SelectedItem> iterator = shoppingcartX.getSelectedItems().iterator(); iterator.hasNext();) {
+					SelectedItem selItem = (SelectedItem) iterator.next();
+					Catalog catalogX = selItem.getItem();
+					sb.append("<tr>");
+					sb.append("<td>"+catalogX.getName()+"</td>");
+					sb.append("<td>"+catalogX.getPrice()+"</td>");
+					sb.append("<td>"+selItem.getQuantity()+"</td>");
+					sb.append("<td>"+catalogX.getPrice() * selItem.getQuantity()+"</td>");
+					sb.append("</tr>");
+				}
+				sb.append("<tr class='tableLastRow'>");
+				sb.append("<th colspan=2>Total</th>");
+				sb.append("<th>"+shoppingcartX.getTotalItems()+"</th>");
+				sb.append("<th>"+shoppingcartX.getTotalItemCost()+"</th>");
+				sb.append("</tr>");							
+				sb.append("</table>");
+			return sb.toString();
+		 }
+		 
+		 public static String getPaymentStatus(String st){
+			 String status = "PENDING";
+			 if(st.equalsIgnoreCase("Pending")) status = "PENDING";
+			 else if(st.equalsIgnoreCase("Success")) status = "PAID";
+			 else if(st.equalsIgnoreCase("Failed")) status = "FAIL";
+			 
+			 return status;
+		 }
+		 public static String generateRandomString(int length)  
+		  {  
+		    final int PASSWORD_LENGTH = length;  
+		    StringBuffer sb = new StringBuffer();  
+		    for (int x = 0; x < PASSWORD_LENGTH; x++)  
+		    {  
+		      sb.append((char)((int)(Math.random()*26)+97));  
+		    }  
+		   // System.out.println(sb.toString()); 
+		    return sb.toString();
+		  }  		 
+		 
+		 public static String getAllRequestParams(HttpServletRequest req)   {
+			// Get the values of all request parameters
+			    Enumeration enumr = req.getParameterNames();
+			    String name = "param";
+			    StringBuffer sb = new StringBuffer();
+			    for (; enumr.hasMoreElements(); ) {
+			        // Get the name of the request parameter
+			        name = (String)enumr.nextElement();
+			        if(!name.equalsIgnoreCase("formAction")){
+				        sb.append(name+"=");
+				        // Get the value of the request parameter
+				        sb.append(req.getParameter(name)+"&");
+			        }
+			    }
+			    return sb.toString();
+		 }
 }

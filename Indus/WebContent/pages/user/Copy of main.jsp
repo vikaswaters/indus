@@ -27,11 +27,11 @@
 <%@ include file="cart.jsp"%> 
 </div>
 <div id="targetDiv"	style="position: absolute; width: 200px;  top: 140px; left: 10px;">
-<b class="boldheaders">Category</b>&nbsp;&nbsp;[<%=prefForm.getCatalogList().size()%>&nbsp;items]<br/>
+<b class="boldheaders">Category</b><br/>
 
-<html:select property="targetID" size="20" style="position: absolute; width: 230px; top: 20px; left: 10px;" styleClass="selectCatalogItem" multiple="" onchange="loadTargetCatalogData('MainForm', 'CHANGE_TARGET_CATALOG') ">
-		<html:optionsCollection name="MainForm" property="targetList" styleClass="selectCatalogItem" label="targetName" value="targetID" />
-</html:select><br/>
+<html:select property="targetID" size="19" styleClass="selectCatalogItem" multiple="" onchange="loadTargetCatalogData('MainForm', 'CHANGE_TARGET_CATALOG') ">
+		<html:optionsCollection name="MainForm" property="targetList" label="targetName" value="targetID" />
+</html:select><%=prefForm.getCatalogList().size()%>&nbsp;items
 
 <%-- 
 <html:select style="position: absolute; width: 180px; top: 20px; left: 10px;" property="targetID"  size="19" styleClass="selectCatalog" onchange="loadTargetCatalogData('MainForm', 'CHANGE_TARGET_CATALOG') ">
@@ -39,13 +39,12 @@
 </html:select>
 --%>
 </div>
-<div id="targetDivDummy"  style="position: absolute; width: 0.0em; height:500px; top: 140px; left: 200px;" class="boundaryboxdummy">
+<div id="targetDivDummy"  style="position: absolute; width: 0.0em; height:500px; top: 140px; left: 190px;" class="boundaryboxdummy">
 </div>
-
 <input type="hidden" name="formAction" value="" />
 <input type="hidden" name="previousformAction" value="" />
 <input type="hidden" name="selectedItemID" value="" />
-<div id="catalogDiv" style="position: absolute; width: 800px; height:2000px; top: 140px; left: 220px;" class="boundaryboxgrey">
+<div id="catalogDiv" style="position: absolute; width: 800px; height:2000px; top: 140px; left: 200px;" class="boundaryboxgrey">
 <table  cellpadding="5" cellspacing="5" border="0">
 	<tr>
 	</tr>

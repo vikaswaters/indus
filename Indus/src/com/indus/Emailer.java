@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -19,17 +18,20 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+import org.apache.log4j.Logger;
+
 /**
 * Simple use case for the javax.mail API.
 */
 public final class Emailer {
+	private static final Logger logger = Logger.getLogger(Emailer.class);
 	private static Properties fMailServerConfig = new Properties();
   /**
   * Send a single email.
   */
   public void sendEmail(String aSubject, String aBody, String emailTO) throws MessagingException{
 	 // String aToCCEmailAddr;
-	  System.out.println("========= Sending Email =========");
+	  logger.info("========= Sending Email to : "+emailTO+" =========");
     //Authenticators are used to prompt the user for user name and password (required to send mails outside the mailserver domain(yahoo, hotmail etc.)
 	  boolean authenticationRequired = true;
 	    String aFromEmailAddr = fMailServerConfig.getProperty("mail.from");
@@ -50,10 +52,11 @@ public final class Emailer {
         message.setText( aBody );
         
        Transport.send( message );
-      System.out.println("Mail sent successfully!!!");
+      logger.info("Mail sent successfully!!!");
     }
     catch (MessagingException ex){
       System.err.println("Cannot send email. " + ex);
+      logger.error("Cannot send email. " + ex);
     }
   }
   //////////////////////////////
@@ -106,7 +109,7 @@ public final class Emailer {
 
 		Transport.send(message);
 
-		System.out.println("Done");
+		logger.info("Done");
 
 	} catch (MessagingException e) {
 		throw new RuntimeException(e);

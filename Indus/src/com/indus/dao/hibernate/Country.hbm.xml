@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 21-Jun-2011 15:13:39 by Hibernate Tools 3.4.0.Beta1 -->
+<!-- Generated 09-Jul-2011 00:48:35 by Hibernate Tools 3.4.0.Beta1 -->
 <hibernate-mapping>
     <class name="com.indus.dao.hibernate.Country" table="country" catalog="induscom_indus">
         <id name="countryid" type="java.lang.Integer">
@@ -9,7 +9,7 @@
             <generator class="identity" />
         </id>
         <property name="name" type="string">
-            <column name="name" length="50" not-null="true" unique="true" />
+            <column name="name" length="50" not-null="true" />
         </property>
         <set name="shippings" table="shipping" inverse="true" lazy="true" fetch="select">
             <key>

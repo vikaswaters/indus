@@ -1,6 +1,6 @@
 package com.indus.dao.hibernate;
 
-// Generated 21-Jun-2011 15:13:39 by Hibernate Tools 3.4.0.Beta1
+// Generated 09-Jul-2011 00:48:35 by Hibernate Tools 3.4.0.Beta1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,14 +20,19 @@ public class Orders implements java.io.Serializable {
 	private Integer status;
 	private Date shippingdate;
 	private String comments;
+	private String invoiceid;
 	private Set orderitemses = new HashSet(0);
 
 	public Orders() {
 	}
 
+	public Orders(String invoiceid) {
+		this.invoiceid = invoiceid;
+	}
+
 	public Orders(Customer customer, Shipping shipping, Payment payment,
 			Float amount, Date orderdate, Integer status, Date shippingdate,
-			String comments, Set orderitemses) {
+			String comments, String invoiceid, Set orderitemses) {
 		this.customer = customer;
 		this.shipping = shipping;
 		this.payment = payment;
@@ -36,6 +41,7 @@ public class Orders implements java.io.Serializable {
 		this.status = status;
 		this.shippingdate = shippingdate;
 		this.comments = comments;
+		this.invoiceid = invoiceid;
 		this.orderitemses = orderitemses;
 	}
 
@@ -109,6 +115,14 @@ public class Orders implements java.io.Serializable {
 
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+
+	public String getInvoiceid() {
+		return this.invoiceid;
+	}
+
+	public void setInvoiceid(String invoiceid) {
+		this.invoiceid = invoiceid;
 	}
 
 	public Set getOrderitemses() {

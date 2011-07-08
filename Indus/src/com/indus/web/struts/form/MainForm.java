@@ -27,7 +27,7 @@ import com.lbr.dao.specificdao.DaoUtilities;
 import com.lbr.web.struts.form.UserPreferenceForm;
 
 public class MainForm extends org.apache.struts.validator.ValidatorForm{
-	private static final Logger logger = Logger.getLogger(UserPreferenceForm.class);
+	private static final Logger logger = Logger.getLogger(MainForm.class);
 
 	private List<Catalog> catalogList;
 	private String formAction = "";

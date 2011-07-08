@@ -72,7 +72,7 @@ check http://www.mchange.com/projects/c3p0/index.html#maxIdleTime for all paramt
 				<prop key="hibernate.current_session_context_class">thread</prop>
 				<prop key="current_session_context_class">thread</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLMyISAMDialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
 	</bean>

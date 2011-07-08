@@ -33,7 +33,7 @@ public class AddressAction  extends IndusAction{
 			    ActionForm form,
 			    HttpServletRequest request,
 			    HttpServletResponse response) throws Exception{
-		 System.out.println("==============ADDRESS Action called ===========");
+		 //System.out.println("==============ADDRESS Action called ===========");
 	 		ActionMessages errors = new ActionMessages();
 	 		AddressForm objForm = (AddressForm) form;
 	 		ShoppingCart shoppingCart = null;
@@ -75,7 +75,8 @@ public class AddressAction  extends IndusAction{
 	        }
 	        else if(objForm.getFormAction()!=null && objForm.getFormAction().equalsIgnoreCase("MODIFY_SHIPPING_ADDRESS")){
 	        	Customer existingcustomer = DaoUtilities.getCustomerByIDSmartCall(request, null);
-	        	this.populateShippingAddressData(objForm, existingcustomer.getAddressByShipaddressid());
+	        	existingcustomer.setAddressByShipaddressid(this.populateShippingAddressData(objForm, existingcustomer.getAddressByShipaddressid()));
+	        	
 	        	boolean success = DaoUtilities.createOrUpdateAddress(existingcustomer.getAddressByShipaddressid());
 	        	if(success)
 	        		request.setAttribute("ADDRESS_SAVED", "");

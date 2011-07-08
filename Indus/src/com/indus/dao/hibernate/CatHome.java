@@ -1,6 +1,6 @@
 package com.indus.dao.hibernate;
 
-// Generated 21-Jun-2011 15:13:39 by Hibernate Tools 3.4.0.Beta1
+// Generated 09-Jul-2011 00:48:36 by Hibernate Tools 3.4.0.Beta1
 
 import java.util.List;
 import javax.naming.InitialContext;

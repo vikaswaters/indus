@@ -20,7 +20,7 @@ import com.lbr.dao.specificdao.DaoUtilities;
 import com.lbr.web.struts.action.UserPreferenceAction;
 
 public class ForgetPasswordAction extends IndusAction {
-	private static final Logger logger = Logger.getLogger(UserPreferenceAction.class);
+	private static final Logger logger = Logger.getLogger(ForgetPasswordAction.class);
 
 	 public ActionForward execute(
 			    ActionMapping mapping,

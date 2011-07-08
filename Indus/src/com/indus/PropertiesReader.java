@@ -25,7 +25,7 @@ public class PropertiesReader {
         // Get the inputStream  
     	try{
 	        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(propFile);  
-	        System.out.println("InputStream is: " + inputStream);  
+	        //System.out.println("InputStream is: " + inputStream);  
 	        // load the inputStream using the Properties  
 	        properties.load(inputStream); 
 	        //System.out.println("===================SUCCESS======");

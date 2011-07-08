@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionMessage;
 
+import com.indus.CountryComparator;
 import com.indus.dao.hibernate.Address;
 import com.indus.dao.hibernate.Cat;
 import com.indus.dao.hibernate.Catalog;
@@ -28,6 +29,7 @@ import com.indus.dao.hibernate.Shipping;
 import com.lbr.LbrUtility;
 import com.lbr.SubcategoryWrapper;
 import com.lbr.SubcategoryWrapperComparator;
+import com.lbr.core.EventsComparator;
 import com.lbr.dao.genericdao.GenericDao;
 import com.lbr.dao.hibernate.domain.Category;
 import com.lbr.dao.hibernate.domain.City;
@@ -65,6 +67,7 @@ public class DaoUtilities {
 	public static List getAllCountries(){
 		   String HQL_QUERY = "from Country e";
 		   List<Country> countries = executeCustomHQLQuery("countryDao", HQL_QUERY, null, null);
+		   Collections.sort(countries, new CountryComparator());
 		   System.out.println("Loaded "+countries.size()+" countries");
 		   for (Iterator iterator = countries.iterator(); iterator.hasNext();) {
 				Country country = (Country) iterator.next();
@@ -172,6 +175,16 @@ public class DaoUtilities {
 		}
 		 return true;
 	 }	
+	 public static boolean updateOrder(Orders order){
+		 GenericDao daoEvents = (GenericDao)ApplicationContextProvider.getApplicationContext().getBean("ordersDao");
+		 try{
+			 Object obj = daoEvents.update(order);
+		 }catch (Exception e) {
+			 logger.error("Error creating order: "+e);
+			return false;
+		}
+		 return true;
+	 }		 
 	 public static boolean createNewOrderItem(Orderitems order){
 		 GenericDao daoEvents = (GenericDao)ApplicationContextProvider.getApplicationContext().getBean("orderitemsDao");
 		 try{

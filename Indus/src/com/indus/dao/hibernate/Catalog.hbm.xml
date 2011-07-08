@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 21-Jun-2011 15:13:39 by Hibernate Tools 3.4.0.Beta1 -->
+<!-- Generated 09-Jul-2011 00:48:35 by Hibernate Tools 3.4.0.Beta1 -->
 <hibernate-mapping>
     <class name="com.indus.dao.hibernate.Catalog" table="catalog" catalog="induscom_indus">
         <id name="itemId" type="java.lang.Integer">
@@ -17,8 +17,8 @@
         <property name="price" type="java.lang.Float">
             <column name="price" precision="12" scale="0" />
         </property>
-        <property name="targetId" type="java.lang.Integer">
-            <column name="targetID" />
+        <property name="imageLayout" type="java.lang.Boolean">
+            <column name="imageLayout" />
         </property>
         <property name="stock" type="java.lang.Integer">
             <column name="stock" />
@@ -27,16 +27,13 @@
             <column name="color" length="50" />
         </property>
         <property name="size" type="string">
-            <column name="size" length="50" />
+            <column name="size" length="100" />
         </property>
         <property name="weight" type="java.lang.Float">
             <column name="weight" precision="12" scale="0" />
         </property>
         <property name="material" type="string">
             <column name="material" length="40" />
-        </property>
-        <property name="description" type="string">
-            <column name="description" length="500" />
         </property>
         <property name="image" type="string">
             <column name="image" length="200" not-null="true" />
@@ -56,6 +53,9 @@
         </property>
         <property name="updatedon" type="timestamp">
             <column name="updatedon" length="19" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="500" />
         </property>
         <set name="orderitemses" table="orderitems" inverse="true" lazy="true" fetch="select">
             <key>

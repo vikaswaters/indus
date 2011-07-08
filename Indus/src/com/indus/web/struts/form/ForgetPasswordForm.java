@@ -12,7 +12,7 @@ import com.indus.IndusUtility;
 import com.lbr.web.struts.form.UserPreferenceForm;
 
 public class ForgetPasswordForm extends org.apache.struts.validator.ValidatorForm{
-	private static final Logger logger = Logger.getLogger(UserPreferenceForm.class);
+	private static final Logger logger = Logger.getLogger(ForgetPasswordForm.class);
 
 	private String formAction = "";
 	//////////////////////////////////

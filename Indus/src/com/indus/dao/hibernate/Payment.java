@@ -1,6 +1,6 @@
 package com.indus.dao.hibernate;
 
-// Generated 21-Jun-2011 15:13:39 by Hibernate Tools 3.4.0.Beta1
+// Generated 09-Jul-2011 00:48:35 by Hibernate Tools 3.4.0.Beta1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -12,10 +12,10 @@ import java.util.Set;
 public class Payment implements java.io.Serializable {
 
 	private Integer paymentid;
+	private String transactionid;
 	private Integer type;
 	private Float amount;
 	private Integer status;
-	private String paymentdetails;
 	private Date paymentdate;
 	private String comments;
 	private Set orderses = new HashSet(0);
@@ -23,13 +23,12 @@ public class Payment implements java.io.Serializable {
 	public Payment() {
 	}
 
-	public Payment(Integer type, Float amount, Integer status,
-			String paymentdetails, Date paymentdate, String comments,
-			Set orderses) {
+	public Payment(String transactionid, Integer type, Float amount,
+			Integer status, Date paymentdate, String comments, Set orderses) {
+		this.transactionid = transactionid;
 		this.type = type;
 		this.amount = amount;
 		this.status = status;
-		this.paymentdetails = paymentdetails;
 		this.paymentdate = paymentdate;
 		this.comments = comments;
 		this.orderses = orderses;
@@ -41,6 +40,14 @@ public class Payment implements java.io.Serializable {
 
 	public void setPaymentid(Integer paymentid) {
 		this.paymentid = paymentid;
+	}
+
+	public String getTransactionid() {
+		return this.transactionid;
+	}
+
+	public void setTransactionid(String transactionid) {
+		this.transactionid = transactionid;
 	}
 
 	public Integer getType() {
@@ -65,14 +72,6 @@ public class Payment implements java.io.Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public String getPaymentdetails() {
-		return this.paymentdetails;
-	}
-
-	public void setPaymentdetails(String paymentdetails) {
-		this.paymentdetails = paymentdetails;
 	}
 
 	public Date getPaymentdate() {

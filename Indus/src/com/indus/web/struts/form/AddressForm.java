@@ -17,7 +17,7 @@ import com.indus.SelectionBean;
 import com.indus.TARGET_TYPE;
 
 public class AddressForm extends org.apache.struts.validator.ValidatorForm{
-	private static final Logger logger = Logger.getLogger(UserLoginForm.class);
+	private static final Logger logger = Logger.getLogger(AddressForm.class);
 
 	//private String formUserAction = "";
 	private String formAction = "";

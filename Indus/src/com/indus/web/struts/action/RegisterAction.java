@@ -21,7 +21,7 @@ import com.lbr.dao.specificdao.DaoUtilities;
 import com.lbr.web.struts.action.UserPreferenceAction;
 
 public class RegisterAction extends IndusAction {
-	private static final Logger logger = Logger.getLogger(UserPreferenceAction.class);
+	private static final Logger logger = Logger.getLogger(RegisterAction.class);
 
 	 public ActionForward execute(
 			    ActionMapping mapping,

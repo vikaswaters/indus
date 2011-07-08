@@ -14,17 +14,19 @@
 <%@page import="com.lbr.dao.hibernate.domain.*"%>
 <%@page import="com.lbr.core.*"%>
 
-<div id="shoppingcartsummary" style="width: 200; position: relative; top: 40px; left: 0px" class="boundarybox">
-<%
-	if(request.getSession().getAttribute("SHOPPING_CART")==null || ((ShoppingCart)request.getSession().getAttribute("SHOPPING_CART")).isEmpty()){
-%>
-	<b>Your <img alt="help" height="40" width="30" src="/images/shopping_cart.png" TITLE="Empty"/> is Empty</b>
-<% }else{
-	ShoppingCart shoppingcart = (ShoppingCart)request.getSession().getAttribute("SHOPPING_CART");
-	int numItems= shoppingcart.getSelectedItems().size();
+	<%
+		if(request.getSession().getAttribute("SHOPPING_CART")==null || ((ShoppingCart)request.getSession().getAttribute("SHOPPING_CART")).isEmpty()){
 	%>
-	<b>Your <img alt="help" height="50" width="40" src="/images/shopping-cart-full.png" TITLE="Empty"/> has <%=numItems %> items<br/><br/>Cost(USD): <%=shoppingcart.getTotalItemCost() %></b>
-</div>	
+	<div id="shoppingcartsummary" style="width: 200; position: relative; top: 40px; left: 0px" class="boundarybox">
+		<b>Your <img alt="help" height="40" width="30" src="/images/shopping_cart.png" TITLE="Empty"/> is Empty</b>
+	</div>
+	<% }else{
+		ShoppingCart shoppingcart = (ShoppingCart)request.getSession().getAttribute("SHOPPING_CART");
+		int numItems= shoppingcart.getSelectedItems().size();
+		%>
+	<div id="shoppingcartsummary" style="width: 200; position: relative; top: 40px; left: 0px" class="boundarybox">		
+		<b>Your <img alt="help" height="50" width="40" src="/images/shopping-cart-full.png" TITLE="Empty"/> has <%=numItems %> items<br/><br/>Cost(USD): <%=shoppingcart.getTotalItemCost() %></b>
+	</div>	
 	
 	<div id="checkout"	style="width: 100; position: relative; top: -42px; left: 250px">
 		<html:submit styleClass="btn" onclick="SetActionSubmitForm('MainForm', 'CHECKOUT')">

@@ -41,7 +41,7 @@
 <div id="selectDiv"	style="position: absolute; top: 150px; left: 560px;">
 	<table cellpadding="3" cellspacing="2" border="8" width="300">
 				<tr><td><b>Select Quantity</b></td><td><html:text property="quantity" size="5" maxlength="2" onchange="calculateCost(this.value)"></html:text></td></tr>
-				<!--  
+				<%if(prefForm.getAvailSizeList()!=null && prefForm.getAvailSizeList().size() >0){ %>  
 				<tr><td>Select Size </td>
 					<td>
 						<html:select property="sizeID" onchange="">
@@ -49,7 +49,7 @@
 						</html:select>			
 					</td>
 				</tr>
-				-->
+				<% } %>
 				<tr><td><b>Cost @ <%=catalog.getPrice()%> USD </b></td> <td><html:text property="currcost" value="<%=catalog.getPrice().toString()%>" disabled="true"></html:text></td>
 				</tr>
 				<tr class="spaceUnderSmall">

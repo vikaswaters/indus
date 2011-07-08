@@ -70,13 +70,48 @@ AddressForm prefForm = (AddressForm) session.getAttribute("AddressForm");
 </div>		
 </html:form>
 
+<%--  PAYPAL code
+https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_html_Appx_websitestandard_htmlvariables
+amount_1	Price of a single item or the total price of all items in the shopping cart
+business	Email address of your PayPal account
+item_name_1	Name of the item or a name for the entire shopping cart
+upload		Indicates the use of third party shopping cart
+notify_url	The URL to which PayPal posts information about the transaction, in the form of Instant Payment Notification messages.
+invoice		Passthrough variable you can use to identify your invoice number for this purchase.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post"> 
+<input type="hidden" name="cmd" value="_cart"> 
+<input type="hidden" name="upload" value="1"> 
+<input type="hidden" name="business" value="seller@designerfotos.com"> 
+<input type="hidden" name="item_name_1" value="Aggregated items"> 
+<input type="hidden" name="amount_1" value="3.00"> 
+<input type="submit" value="PayPal"> 
+</form> 
+ --%>
 <%if(request.getAttribute("ORDER_CONFIRMED")!=null){ %>
 	<div id="paypal" style="position: absolute; top:170px; left: 900px; width: 300px;" class="boundarybox">
+	<%-- 	PRODUCTION :  
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-	<input type="hidden" name="cmd" value="_s-xclick">
-	<input type="hidden" name="hosted_button_id" value="VFD4LS8XCZNFS">
-	<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+			<input type="hidden" name="cmd" value="_cart"> 
+			<input type="hidden" name="upload" value="1"> 
+			<input type="hidden" name="business" value="indusaura@gmail.com"> 
+			<input type="hidden" name="item_name_1" value="<%=shoppingcart.getTotalItems()%>"> 
+			<input type="hidden" name="amount_1" value="<%=(shoppingcart.getTotalItemCost()+shippingcost)%>"> 
+			<input type="hidden" name="notify_url" value="http://localhost:8080/Main.do?formAction=PAYMENT_DETAILS"> 
+			<input type="hidden" name="invoice" value="INVOICE#">	<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
 	<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+	 --%>
+	<%-- SANDBOX TESTING  --%>
+	<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_cart"> 
+			<input type="hidden" name="upload" value="1"> 
+			<input type="hidden" name="business" value="vikazs_1310024276_biz@gmail.com"> 
+			<input type="hidden" name="item_name_1" value="Total items for <%=shoppingcart.getCustomer().getName()%> : <%=shoppingcart.getTotalItems()%> "> 
+			<input type="hidden" name="amount_1" value="<%=(shoppingcart.getTotalItemCost()+shippingcost)%>"> 
+			<input type="hidden" name="return" value="http://indusaura.com/indus/Main.do?formAction=PAYMENT_DONE">
+			<input type="hidden" name="invoice" value="<%=(shoppingcart.getOrder().getOrderid())%>_">
+			<input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+			<img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
 	</form>
 	</div>
 <%} %>

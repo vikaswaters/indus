@@ -1,6 +1,6 @@
 package com.indus.dao.hibernate;
 
-// Generated 21-Jun-2011 15:13:39 by Hibernate Tools 3.4.0.Beta1
+// Generated 09-Jul-2011 00:48:35 by Hibernate Tools 3.4.0.Beta1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -15,18 +15,18 @@ public class Catalog implements java.io.Serializable {
 	private Cat cat;
 	private String name;
 	private Float price;
-	private Integer targetId;
+	private Boolean imageLayout;
 	private Integer stock;
 	private String color;
 	private String size;
 	private Float weight;
 	private String material;
-	private String description;
 	private String image;
 	private String icon;
 	private Integer hotindex;
 	private Integer discount;
 	private Date updatedon;
+	private String description;
 	private Set orderitemses = new HashSet(0);
 
 	public Catalog() {
@@ -37,25 +37,26 @@ public class Catalog implements java.io.Serializable {
 		this.image = image;
 	}
 
-	public Catalog(Cat cat, String name, Float price, Integer targetId,
+	public Catalog(Cat cat, String name, Float price, Boolean imageLayout,
 			Integer stock, String color, String size, Float weight,
-			String material, String description, String image, String icon,
-			Integer hotindex, Integer discount, Date updatedon, Set orderitemses) {
+			String material, String image, String icon, Integer hotindex,
+			Integer discount, Date updatedon, String description,
+			Set orderitemses) {
 		this.cat = cat;
 		this.name = name;
 		this.price = price;
-		this.targetId = targetId;
+		this.imageLayout = imageLayout;
 		this.stock = stock;
 		this.color = color;
 		this.size = size;
 		this.weight = weight;
 		this.material = material;
-		this.description = description;
 		this.image = image;
 		this.icon = icon;
 		this.hotindex = hotindex;
 		this.discount = discount;
 		this.updatedon = updatedon;
+		this.description = description;
 		this.orderitemses = orderitemses;
 	}
 
@@ -91,12 +92,12 @@ public class Catalog implements java.io.Serializable {
 		this.price = price;
 	}
 
-	public Integer getTargetId() {
-		return this.targetId;
+	public Boolean getImageLayout() {
+		return this.imageLayout;
 	}
 
-	public void setTargetId(Integer targetId) {
-		this.targetId = targetId;
+	public void setImageLayout(Boolean imageLayout) {
+		this.imageLayout = imageLayout;
 	}
 
 	public Integer getStock() {
@@ -139,14 +140,6 @@ public class Catalog implements java.io.Serializable {
 		this.material = material;
 	}
 
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public String getImage() {
 		return this.image;
 	}
@@ -185,6 +178,14 @@ public class Catalog implements java.io.Serializable {
 
 	public void setUpdatedon(Date updatedon) {
 		this.updatedon = updatedon;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Set getOrderitemses() {
